@@ -96,7 +96,8 @@ class HomeScreen extends ConsumerWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.lg),
+                        horizontal: AppSpacing.lg,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -112,10 +113,9 @@ class HomeScreen extends ConsumerWidget {
                     SizedBox(
                       height: 200,
                       child: projectsAsync.when(
-                        loading: () => const Center(
-                            child: CircularProgressIndicator()),
-                        error: (e, _) =>
-                            Center(child: Text('Erreur : $e')),
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                        error: (e, _) => Center(child: Text('Erreur : $e')),
                         data: (projects) => projects.isEmpty
                             ? _EmptyProjects(
                                 onAdd: () =>
@@ -124,14 +124,15 @@ class HomeScreen extends ConsumerWidget {
                             : ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: AppSpacing.lg),
+                                  horizontal: AppSpacing.lg,
+                                ),
                                 itemCount: projects.length,
                                 itemBuilder: (_, i) => ProjectCard(
                                   project: projects[i],
                                   onTap: () => context.goNamed(
                                     AppRoutes.projectDetail,
                                     pathParameters: {
-                                      'projectId': projects[i].id
+                                      'projectId': projects[i].id,
                                     },
                                   ),
                                 ),
@@ -151,16 +152,20 @@ class HomeScreen extends ConsumerWidget {
                     AppSpacing.lg,
                     AppSpacing.sm,
                   ),
-                  child: Text("Tâches d'aujourd'hui",
-                      style: context.texts.titleMedium),
+                  child: Text(
+                    "Tâches d'aujourd'hui",
+                    style: context.texts.titleMedium,
+                  ),
                 ),
               ),
 
               tasksTodayAsync.when(
                 loading: () => const SliverToBoxAdapter(
-                    child: TaskListSkeleton(itemCount: 3)),
+                  child: TaskListSkeleton(itemCount: 3),
+                ),
                 error: (e, _) => SliverToBoxAdapter(
-                    child: Center(child: Text('Erreur : $e'))),
+                  child: Center(child: Text('Erreur : $e')),
+                ),
                 data: (tasks) => tasks.isEmpty
                     ? const SliverToBoxAdapter(child: _EmptyTasks())
                     : SliverList(
@@ -168,9 +173,11 @@ class HomeScreen extends ConsumerWidget {
                           (_, i) => TaskListTile(
                             task: tasks[i],
                             onToggle: () => ref
-                                .read(tasksProvider(
-                                  projectId: tasks[i].projectId,
-                                ).notifier)
+                                .read(
+                                  tasksProvider(
+                                    projectId: tasks[i].projectId,
+                                  ).notifier,
+                                )
                                 .toggleTask(tasks[i].id),
                             onTap: () => context.goNamed(
                               AppRoutes.taskDetail,
@@ -187,7 +194,8 @@ class HomeScreen extends ConsumerWidget {
               ),
 
               const SliverPadding(
-                  padding: EdgeInsets.only(bottom: AppSpacing.xxl)),
+                padding: EdgeInsets.only(bottom: AppSpacing.xxl),
+              ),
             ],
           ),
         ),
@@ -208,20 +216,21 @@ class _StatsRow extends StatelessWidget {
 
     return Row(
       children: [
-        _StatCard(
-            label: 'Aujourd\'hui', value: total, icon: Icons.today),
+        _StatCard(label: 'Aujourd\'hui', value: total, icon: Icons.today),
         const SizedBox(width: AppSpacing.sm),
         _StatCard(
-            label: 'Terminées',
-            value: done,
-            icon: Icons.check_circle_outline,
-            color: Colors.green),
+          label: 'Terminées',
+          value: done,
+          icon: Icons.check_circle_outline,
+          color: Colors.green,
+        ),
         const SizedBox(width: AppSpacing.sm),
         _StatCard(
-            label: 'En retard',
-            value: overdue,
-            icon: Icons.warning_amber_outlined,
-            color: overdue > 0 ? Colors.red : null),
+          label: 'En retard',
+          value: overdue,
+          icon: Icons.warning_amber_outlined,
+          color: overdue > 0 ? Colors.red : null,
+        ),
       ],
     );
   }
@@ -286,8 +295,11 @@ class _EmptyProjects extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.folder_open,
-              size: 40, color: context.colors.outlineVariant),
+          Icon(
+            Icons.folder_open,
+            size: 40,
+            color: context.colors.outlineVariant,
+          ),
           const SizedBox(height: AppSpacing.sm),
           TextButton.icon(
             onPressed: onAdd,
@@ -309,8 +321,7 @@ class _EmptyTasks extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.xl),
       child: Column(
         children: [
-          Icon(Icons.task_alt,
-              size: 48, color: context.colors.outlineVariant),
+          Icon(Icons.task_alt, size: 48, color: context.colors.outlineVariant),
           const SizedBox(height: AppSpacing.md),
           Text(
             "Aucune tâche pour aujourd'hui 🎉",
