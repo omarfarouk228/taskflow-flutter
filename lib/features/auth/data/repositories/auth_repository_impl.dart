@@ -126,14 +126,18 @@ class AuthRepositoryImpl implements AuthRepository {
       'email-already-in-use' =>
         const ValidationException('Cet email est déjà utilisé.'),
       'weak-password' =>
-        const ValidationException('Mot de passe trop faible (min 8 car.).'),
+        const ValidationException('Mot de passe trop faible (min 6 car.).'),
       'invalid-email' =>
         const ValidationException('Email invalide.'),
       'network-request-failed' =>
         const NetworkException('Pas de connexion internet.'),
       'too-many-requests' =>
         const ServerException('Trop de tentatives. Réessayez plus tard.'),
-      _ => ServerException(e.message ?? 'Erreur d\'authentification.'),
+      'operation-not-allowed' =>
+        const ServerException('Connexion par email désactivée. Activez-la dans la Firebase Console.'),
+      'internal-error' =>
+        const ServerException('Erreur Firebase interne. Vérifiez que Email/Password est activé dans la Firebase Console.'),
+      _ => ServerException('[${e.code}] ${e.message ?? 'Erreur d\'authentification.'}'),
     };
   }
 }

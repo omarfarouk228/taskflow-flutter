@@ -176,7 +176,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       style: context.texts.bodyMedium,
                     ),
                     TextButton(
-                      onPressed: () => context.goNamed(AppRoutes.register),
+                      onPressed: () => context.pushNamed(AppRoutes.register),
                       child: const Text('Créer un compte'),
                     ),
                   ],
