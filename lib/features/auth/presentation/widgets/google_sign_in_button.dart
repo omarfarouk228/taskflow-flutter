@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../providers/auth_provider.dart';
 
@@ -15,9 +16,10 @@ class GoogleSignInButton extends ConsumerWidget {
           ? null
           : () => ref.read(authProvider.notifier).signInWithGoogle(),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/icons/google.png', width: 20, height: 20),
+          SvgPicture.asset('assets/icons/google.svg', width: 20, height: 20),
           const SizedBox(width: 12),
           const Text('Continuer avec Google'),
         ],

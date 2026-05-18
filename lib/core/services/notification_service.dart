@@ -9,14 +9,14 @@ class NotificationService {
     tz.initializeTimeZones();
 
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const ios = DarwinInitializationSettings(
+    const darwin = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
 
     await _plugin.initialize(
-      const InitializationSettings(android: android, iOS: ios),
+      const InitializationSettings(android: android, iOS: darwin, macOS: darwin),
       onDidReceiveNotificationResponse: _onNotificationTap,
     );
   }
@@ -50,6 +50,10 @@ class NotificationService {
           icon: '@mipmap/ic_launcher',
         ),
         iOS: DarwinNotificationDetails(
+          presentAlert: true,
+          presentSound: true,
+        ),
+        macOS: DarwinNotificationDetails(
           presentAlert: true,
           presentSound: true,
         ),

@@ -19,21 +19,17 @@ void main() async {
   ]);
 
   // Initialiser Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Initialiser les notifications locales
-  await NotificationService.initialize();
+  //await NotificationService.initialize();
 
   // Charger SharedPreferences avant runApp
   final prefs = await SharedPreferences.getInstance();
 
   runApp(
     ProviderScope(
-      overrides: [
-        sharedPreferencesProvider.overrideWithValue(prefs),
-      ],
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
       child: const TaskFlowApp(),
     ),
   );
